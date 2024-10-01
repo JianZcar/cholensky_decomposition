@@ -1,10 +1,10 @@
-# from objects import *
 import itertools
 import string
+import math
 
 def generate_variable_names():
     alphabet = string.ascii_lowercase
-    for length in range(1, 3):  # Adjust range for more letters if needed
+    for length in range(1, 3):
         for name in itertools.product(alphabet, repeat=length):
             yield ''.join(name)
 
@@ -21,18 +21,26 @@ def create_l(size):
         matrix_.append(matrix_row)
     return matrix_
 
+def transpose(matrix):
+    return [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix))]
+
 def create_ll(size):
     original_matrix = create_l(size)
-    flipped_matrix = [[original_matrix[j][i] for j in range(size)] for i in range(size)]
+    flipped_matrix = transpose(original_matrix)
     return [original_matrix, flipped_matrix]
-if __name__ == "__main__":
-    print('Test')
-    # matrix = create_l(4)
-    # for row in matrix:
-    #     print([var for var in row])
 
-    matrices = create_ll(4)
-    for matrix in matrices:
-        for row in matrix:
-            print([var for var in row])
-        print()
+def dict_to_triangular_matrix(value_dict):
+    num_elements = len(value_dict)
+    rows = math.ceil(math.sqrt(num_elements))
+    cols = rows
+    matrix = [[0] * cols for _ in range(rows)]
+    keys = sorted(value_dict.keys())
+    index = 0
+    for i in range(rows):
+        for j in range(i + 1):
+            if index < len(keys):
+                matrix[i][j] = value_dict[keys[index]]
+                index += 1
+            else:
+                matrix[i][j] = 0
+    return matrix

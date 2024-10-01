@@ -1,4 +1,3 @@
-from create_matrix import *
 import re
 
 def string_exp_matrix_calc(matrix_a, matrix_b):
@@ -23,9 +22,9 @@ def simplify_expression(expr):
         elif re.search(r'\(\w+\)\*\(0\)|\(0\)\*\(\w+\)', term):
             continue
         elif re.search(r'\((\w+)\)\*\(\1\)', term):
-            term = re.sub(r'\((\w+)\)\*\(\1\)', r'(\1**2)', term)
+            term = re.sub(r'\((\w+)\)\*\(\1\)', r'\1^2', term)
         elif re.search(r'\((\w+)\)\*\((\w+)\)', term):
-            term = re.sub(r'\((\w+)\)\*\((\w+)\)', r'(\1*\2)', term)
+            term = re.sub(r'\((\w+)\)\*\((\w+)\)', r'\1*\2', term)
         simplified_terms.append(term)
     return '+'.join(simplified_terms)
 
@@ -40,27 +39,3 @@ def simplify_matrix(matrix):
             simplified_row.append(simplified_expr)
         simplified_matrix.append(simplified_row)
     return simplified_matrix
-
-if __name__ == "__main__":
-    size = 3
-    original_matrix, flipped_matrix = create_ll(size)
-
-    print("Original Matrix:")
-    for row in original_matrix:
-        print(row)
-
-    print("\nFlipped Matrix:")
-    for row in flipped_matrix:
-        print(row)
-
-    result_matrix = string_exp_matrix_calc(original_matrix, flipped_matrix)
-
-    print("\nResult Matrix:")
-    for row in result_matrix:
-        print(row)
-
-    simplified_matrix = simplify_matrix(result_matrix)
-
-    print("\nSimplified Matrix:")
-    for row in simplified_matrix:
-        print(row)
