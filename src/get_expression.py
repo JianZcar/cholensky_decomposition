@@ -52,6 +52,22 @@ def expression_to_matrix(expressions: list):
         variables = sorted(equation.free_symbols, key=lambda x: x.name)
         coefficients = [equation.coeff(var) for var in variables]
         matrix.append(coefficients)
-        rhs_values.append(float(rhs))  # Convert RHS to float for numerical consistency
+        rhs_values.append(float(rhs))
     return matrix, rhs_values
+
+def get_expression_from_matrix(matrix):
+    variables = {}
+    expressions = []
+
+    for i in range(len(matrix)):
+        expr = 0
+        for j in range(len(matrix)):
+            if matrix[i][j] != 0:
+                var_name = chr(97 + j)
+                if var_name not in variables:
+                    variables[var_name] = sp.symbols(var_name)
+                expr += matrix[i][j] * variables[var_name]
+        expressions.append(expr)
+
+    return expressions
 

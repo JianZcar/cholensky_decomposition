@@ -1,6 +1,9 @@
 import sympy as sp
 import re
 
+from mpmath.libmp.libintmath import ifac2
+
+
 def extract_symbols(string):
     string = str(string)
     symbols_set = set()
@@ -37,28 +40,13 @@ def equate_matrices(matrix_a, matrix_b):
             value_dict = solve_expression(expression, value, value_dict)
     return value_dict
 
-def get_expression_for_ty_equal_b(matrix):
-    variables = {}
-    expressions = []
-
-    for i in range(len(matrix)):
-        expr = 0
-        for j in range(len(matrix)):
-            if matrix[i][j] != 0:
-                var_name = chr(97 + j)
-                if var_name not in variables:
-                    variables[var_name] = sp.symbols(var_name)
-                expr += matrix[i][j] * variables[var_name]
-        expressions.append(expr)
-
-    return expressions
-
-def solve_for_ty_equal_b(expressions, b):
+def solve_for_t_matrix(expressions, b, transposed=False):
     value_dict = dict()
+    expressions = expressions[::-1] if transposed else expressions
+    b = b[::-1] if transposed else b
     size = len(expressions)
     for i in range(size):
         value = b[i]
         expression = expressions[i]
-        print(expression)
         value_dict = solve_expression(expression, value, value_dict)
     return value_dict
