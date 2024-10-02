@@ -1,4 +1,5 @@
 import re
+import sympy as sp
 
 def string_exp_matrix_calc(matrix_a, matrix_b):
     size = len(matrix_a)
@@ -39,3 +40,18 @@ def simplify_matrix(matrix):
             simplified_row.append(simplified_expr)
         simplified_matrix.append(simplified_row)
     return simplified_matrix
+
+def expression_to_matrix(expressions: list):
+    matrix = []
+    rhs_values = []
+    for expr in expressions:
+        lhs, rhs = expr.split('=')
+        lhs = lhs.strip()
+        rhs = rhs.strip()
+        equation = sp.sympify(lhs)
+        variables = sorted(equation.free_symbols, key=lambda x: x.name)
+        coefficients = [equation.coeff(var) for var in variables]
+        matrix.append(coefficients)
+        rhs_values.append(float(rhs))  # Convert RHS to float for numerical consistency
+    return matrix, rhs_values
+
