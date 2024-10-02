@@ -70,4 +70,3 @@ def get_expression_from_matrix(matrix):
         expressions.append(expr)
 
     return expressions
-

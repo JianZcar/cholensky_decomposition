@@ -10,7 +10,7 @@ def generate_variable_names():
 
 def create_l(size):
     var_names = generate_variable_names()
-    matrix_ = []
+    matrix = []
     for i in range(size):
         matrix_row = []
         for j in range(size):
@@ -18,8 +18,8 @@ def create_l(size):
                 matrix_row.append(next(var_names))
             else:
                 matrix_row.append(0)
-        matrix_.append(matrix_row)
-    return matrix_
+        matrix.append(matrix_row)
+    return matrix
 
 def transpose(matrix):
     return [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix))]

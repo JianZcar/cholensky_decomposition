@@ -121,7 +121,6 @@ def input_cli():
         elif key == b's':
             draw_list(equations, len(equations)+1)
             print("\n\033[2K", end='\r', flush=True)
-            print(equations)
             return equations
         elif key == b'q':
             print("\n\033[2K", end='\r', flush=True)
